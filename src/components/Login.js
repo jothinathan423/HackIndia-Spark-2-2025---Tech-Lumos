@@ -4,7 +4,7 @@ import { TextField, Button, Typography, Container, Box, Link, Grid } from '@mui/
 import { useNavigate } from 'react-router-dom';
 import Notification from './Notification';
 
-const GitHubLoginPage = () => {
+const Login = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -12,12 +12,24 @@ const GitHubLoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Login Payload:', { usernameOrEmail, password }); // Debugging
+
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', { usernameOrEmail, password });
+            const res = await axios.post('http://localhost:5000/api/auth/login', { 
+                email: usernameOrEmail, // Ensure the backend expects 'email' and 'password'
+                password 
+            });
+            console.log('Login Response:', res.data); // Debugging
+
             localStorage.setItem('token', res.data.token);
             navigate(res.data.user.role === 'admin' ? '/admin-dashboard' : '/dashboard');
         } catch (err) {
-            setNotification({ open: true, message: 'Invalid credentials', severity: 'error' });
+            console.error('Login Error:', err.response?.data || err.message); // Debugging
+            setNotification({ 
+                open: true, 
+                message: err.response?.data?.msg || 'Invalid credentials', 
+                severity: 'error' 
+            });
         }
     };
 
@@ -25,7 +37,7 @@ const GitHubLoginPage = () => {
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h4" gutterBottom>
-                    Sign in 
+                    Sign in
                 </Typography>
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: '1rem' }}>
                     <TextField
@@ -60,14 +72,12 @@ const GitHubLoginPage = () => {
                                 Forgot password?
                             </Link>
                         </Grid>
-                        
                     </Grid>
                 </form>
                 <Box sx={{ mt: 4, textAlign: 'center' }}>
                     <Typography variant="body2">
                         New to Mindlancer? <Link href="#">Create an account</Link>
                     </Typography>
-                    
                 </Box>
             </Box>
             <Notification
@@ -80,4 +90,4 @@ const GitHubLoginPage = () => {
     );
 };
 
-export default GitHubLoginPage;
+export default Login;
