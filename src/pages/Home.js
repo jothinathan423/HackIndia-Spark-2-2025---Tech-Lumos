@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { GoogleLogin } from '@react-oauth/google';
+import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const Home = () => {
@@ -87,7 +88,7 @@ const Home = () => {
                         <span>CONTINUE WITH LINKEDIN</span>
                     </Button>
 
-                    <TextField 
+                    {/* <TextField 
                         label="Email or Username" 
                         variant="outlined" 
                         fullWidth 
@@ -104,12 +105,13 @@ const Home = () => {
                         control={<Checkbox />}
                         label="Remember me"
                         className="mb-3"
-                    />
+                    /> */}
                     <Button 
                         variant="contained" 
                         fullWidth 
                         className="mb-2 p-2"
                         style={{ backgroundColor: '#3f51b5' }}
+                        component={Link} to="/login"
                     >
                         LOGIN
                     </Button>
