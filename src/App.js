@@ -13,8 +13,9 @@ import Home from './pages/Home';
 import Footer from './components/Footer';
 import Logout from './components/Logout';
 import JobPosting from './pages/JobPosting';
+import { googleLogout } from '@react-oauth/google';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Navbar />
@@ -25,17 +26,15 @@ function App() {
         <Route path="/apply/:jobId" element={<ApplyJob />} />
         <Route path="/payment/:amount" element={<Payment />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/" element={Register } /> */}
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/post-job" element={<JobPosting/>} />
-        
+        <Route path="/post-job" element={<JobPosting />} />
       </Routes>
       <Footer />
     </Router>
   );
-}
+};
 
 export default App;
